@@ -1,0 +1,65 @@
+3. Write a program to evaluate postfix expressions.
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX 100
+int stack[MAX];
+int top = -1;
+void push(int x)
+{
+if (top < MAX - 1)
+{
+stack[++top] = x;
+}
+else
+{
+printf("Stack overflow\n");
+}
+}
+int pop()
+{
+if (top >= 0)
+{
+return stack[top--];
+}
+else
+{
+printf("Stack underflow\n");
+return -1;
+}
+}
+int main()
+{
+char exp[MAX];
+int i = 0, op1, op2;
+printf("Enter postfix expression: ");
+scanf("%s", exp);
+while (exp[i] != '\0')
+{
+if (isdigit(exp[i]))
+{
+push(exp[i] - '0');
+}
+else
+{
+op2 = pop();
+op1 = pop();
+switch (exp[i])
+{
+case '+': push(op1 + op2);
+break;
+case '-': push(op1 - op2);
+break;
+case '*': push(op1 * op2);
+break;
+case '/': push(op1 / op2);
+break;
+case '%': push(op1 % op2);
+break;
+}
+}
+i++;
+}
+printf("After evaluation we get the value: %d\n", pop());
+return 0;
+}

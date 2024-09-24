@@ -1,0 +1,93 @@
+2. Write a program to implement queue using arrays.
+#include<stdio.h>
+#include<stdlib.h>
+#define maxsize 2
+int front = -1, rear = -1;
+int queue[maxsize];
+void insert()
+{
+int item;
+if(rear == maxsize-1)
+{
+printf("\n OVERFLOW\n");
+return;
+}
+if(front == -1 && rear == -1)
+{
+printf("\n Enter the element\n");
+scanf("\n %d", &item);
+front = 0;
+rear = 0;
+}
+else
+{
+printf("\n Enter the element\n");
+scanf("\n %d", &item);
+rear = rear+1;
+}
+queue[rear] = item;
+printf("\n Value inserted\n");
+}
+void delete()
+{
+int item;
+if (front == -1 || front > rear)
+{
+printf("\n UNDERFLOW\n");
+return;
+}
+else
+{
+item = queue[front];
+if(front == rear)
+{
+front = -1;
+rear = -1 ;
+}
+else
+{
+front = front + 1;
+}
+printf("\n value deleted is: %d\n",item);
+}
+}
+void display()
+{
+int i;
+if(rear == -1)
+{
+printf("\n Empty queue\n");
+}
+else
+{
+printf("\n Queue elements are:\n");
+for(i=front;i<=rear;i++)
+{
+printf("%d\t",queue[i]);
+}
+printf("\n");
+}
+int main ()
+{
+int choice;
+while(choice != 4)
+{
+printf("\n**********Queue Operations Using Array**********\n");
+printf("\n1.Insert an element\n2.Delete an element\n3.Display the
+queue\n4.Exit\n");
+printf("\n Enter your choice : ");
+scanf("%d", &choice);
+switch(choice)
+{
+case 1: insert();
+break;
+case 2: delete();
+break;
+case 3: display();
+break;
+case 4: exit(0);
+break;
+default: printf("\n Enter valid choice\n");
+}
+}
+}
