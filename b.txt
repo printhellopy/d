@@ -1,93 +1,63 @@
-2. Write a program to implement queue using arrays.
-#include<stdio.h>
-#include<stdlib.h>
-#define maxsize 2
-int front = -1, rear = -1;
-int queue[maxsize];
-void insert()
-{
-int item;
-if(rear == maxsize-1)
-{
-printf("\n OVERFLOW\n");
-return;
-}
-if(front == -1 && rear == -1)
-{
-printf("\n Enter the element\n");
-scanf("\n %d", &item);
-front = 0;
-rear = 0;
-}
-else
-{
-printf("\n Enter the element\n");
-scanf("\n %d", &item);
-rear = rear+1;
-}
-queue[rear] = item;
-printf("\n Value inserted\n");
-}
-void delete()
-{
-int item;
-if (front == -1 || front > rear)
-{
-printf("\n UNDERFLOW\n");
-return;
-}
-else
-{
-item = queue[front];
-if(front == rear)
-{
-front = -1;
-rear = -1 ;
-}
-else
-{
-front = front + 1;
-}
-printf("\n value deleted is: %d\n",item);
-}
-}
-void display()
-{
-int i;
-if(rear == -1)
-{
-printf("\n Empty queue\n");
-}
-else
-{
-printf("\n Queue elements are:\n");
-for(i=front;i<=rear;i++)
-{
-printf("%d\t",queue[i]);
-}
-printf("\n");
-}
-int main ()
-{
-int choice;
-while(choice != 4)
-{
-printf("\n**********Queue Operations Using Array**********\n");
-printf("\n1.Insert an element\n2.Delete an element\n3.Display the
-queue\n4.Exit\n");
-printf("\n Enter your choice : ");
-scanf("%d", &choice);
-switch(choice)
-{
-case 1: insert();
-break;
-case 2: delete();
-break;
-case 3: display();
-break;
-case 4: exit(0);
-break;
-default: printf("\n Enter valid choice\n");
-}
-}
-}
+2. Write a program to normalize the iris dataset using standardization.
+Program Code:
+
+fromsklearn import datasets
+
+import pandas as pd
+
+fromsklearn.preprocessing import StandardScaler, MinMaxScaler
+
+import warnings
+
+iris = datasets.load_iris()
+
+data = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+print(data)
+
+print('Average of Feature')
+
+print(data.mean())
+
+print('\nFeature Variance')
+
+print(data.var())
+
+scaler = StandardScaler()
+
+scaler.fit(data)
+
+iris_scaled_std = scaler.transform(data)
+
+iris_df_std_scaled = pd.DataFrame(data=iris_scaled_std, columns=iris.feature_names)
+
+print('Standardized Feature Average')
+
+print(iris_df_std_scaled.mean())
+
+print('\nStandardized Feature Variance')
+
+print(iris_df_std_scaled.var())
+
+scaler = MinMaxScaler()
+
+scaler.fit(data)
+
+iris_scaled_minmax = scaler.transform(data)
+
+iris_df_minmax_scaled = pd.DataFrame(data=iris_scaled_minmax, columns=iris.feature_names)
+
+print('MinMax Scaled Feature Average')
+
+print(iris_df_minmax_scaled.mean())
+
+print('\nMinMax Scaled Feature Variance')
+
+print(iris_df_minmax_scaled.var())
+
+print('\nMinMax Scaled Min Value')
+
+print(iris_df_minmax_scaled.min())
+
+print('\nMinMax Scaled Max Value')
+print(iris_df_minmax_scaled.max())
