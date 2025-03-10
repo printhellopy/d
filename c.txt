@@ -1,65 +1,45 @@
-3. Write a program to evaluate postfix expressions.
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#define MAX 100
-int stack[MAX];
-int top = -1;
-void push(int x)
-{
-if (top < MAX - 1)
-{
-stack[++top] = x;
-}
-else
-{
-printf("Stack overflow\n");
-}
-}
-int pop()
-{
-if (top >= 0)
-{
-return stack[top--];
-}
-else
-{
-printf("Stack underflow\n");
-return -1;
-}
-}
-int main()
-{
-char exp[MAX];
-int i = 0, op1, op2;
-printf("Enter postfix expression: ");
-scanf("%s", exp);
-while (exp[i] != '\0')
-{
-if (isdigit(exp[i]))
-{
-push(exp[i] - '0');
-}
-else
-{
-op2 = pop();
-op1 = pop();
-switch (exp[i])
-{
-case '+': push(op1 + op2);
-break;
-case '-': push(op1 - op2);
-break;
-case '*': push(op1 * op2);
-break;
-case '/': push(op1 / op2);
-break;
-case '%': push(op1 % op2);
-break;
-}
-}
-i++;
-}
-printf("After evaluation we get the value: %d\n", pop());
-return 0;
-}
+3. Write a program to impute the missing values and perform discrete transformation on the iris 
+
+dataset.
+
+Program Code:
+
+fromsklearn import datasets
+
+importnumpy as np
+
+import pandas as pd
+
+fromsklearn.preprocessing import KBinsDiscretizer
+
+fromsklearn.impute import SimpleImputer
+
+import warnings
+
+iris = datasets.load_iris()
+
+data = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+print(data)
+
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+
+print(imputer)
+
+imputer = imputer.fit(data)
+
+imputed_dataset = imputer.transform(data)
+
+print(imputed_dataset)
+
+iris_quantile_transform = KBinsDiscretizer(n_bins=10, encode='ordinal', strategy='quantile')
+
+quantile_transformed_data = iris_quantile_transform.fit_transform(data)
+
+print(pd.DataFrame(quantile_transformed_data))
+
+iris_uniform_transform = KBinsDiscretizer(n_bins=10, encode='ordinal', strategy='uniform')
+
+uniform_transformed_data = iris_uniform_transform.fit_transform(data)
+
+print(pd.DataFrame(uniform_transformed_data))
