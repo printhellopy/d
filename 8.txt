@@ -1,0 +1,20 @@
+Write a program to apply support vector machine classifier on the iris dataset and generate a 
+confusion matrix of the classifier.
+from sklearn import datasets, decomposition
+import pandas as pd
+fromsklearn.model_selection import train_test_split
+fromsklearn.svm import SVC
+fromsklearn.metrics import confusion_matrix
+fromsklearn.model_selection import cross_val_score
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+SVM_classifier = SVC(kernel='linear', random_state=0)
+SVM_classifier.fit(X_train, y_train)
+accuracy = cross_val_score(estimator=SVM_classifier, X=X_train, y=y_train, cv=10)
+print("Accuracy: {:.2f} %".format(accuracy.mean()*100))
+y_pred = SVM_classifier.predict(X_test)
+SVM_cm = confusion_matrix(y_test, y_pred)
+print("The confusion matrix is:")
+print(SVM_cm)
